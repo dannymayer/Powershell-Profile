@@ -27,7 +27,8 @@ if (Test-Path($ChocolateyProfile)) {
 # Check for Profile Updates
 function Update-Profile {
     try {
-        $url = "https://raw.githubusercontent.com/dannymayer/Powershell-Profile/refs/heads/main/Microsoft.PowerShell_profile.ps1"
+        TOODO: Update to look at my repo for updates
+        $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
         $oldhash = Get-FileHash $PROFILE
         Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
         $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
@@ -82,6 +83,22 @@ function Update-PowerShell {
     } catch {
         Write-Error "Failed to update PowerShell. Error: $_"
     }
+}
+
+# skip in debug mode
+# Check if not in debug mode AND (updateInterval is -1 OR file doesn't exist OR time difference is greater than the update interval)
+if (-not $debug -and `
+    ($updateInterval -eq -1 -or `
+     -not (Test-Path $timeFilePath) -or `
+     ((Get-Date).Date - [datetime]::ParseExact((Get-Content -Path $timeFilePath), 'yyyy-MM-dd', $null).Date).TotalDays -gt $updateInterval)) {
+
+    Update-PowerShell
+    $currentTime = Get-Date -Format 'yyyy-MM-dd'
+    $currentTime | Out-File -FilePath $timeFilePath
+} elseif (-not $debug) {
+    Write-Warning "PowerShell update skipped. Last update check was within the last $updateInterval day(s)."
+} else {
+    Write-Warning "Skipping PowerShell update in debug mode"
 }
 
 function Clear-Cache {
