@@ -205,7 +205,7 @@ $adminSuffix = if ($isAdmin)
 }
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}$adminSuffix" -f $PSVersionTable.PSVersion.ToString()
 
-# Utility Functions
+regionUtility Functions
 function Test-CommandExists
 {
   param($command)
@@ -484,7 +484,9 @@ function trash($path)
     Write-Host "Error: Item '$fullPath' does not exist."
   }
 }
+#endregion
 
+#region Yazi Setup
 # Yazi Shell Wrapper
 function y
 {
@@ -498,7 +500,7 @@ function y
   Remove-Item -Path $tmp
 }
 
-### Quality of Life Aliases
+#region Quality of Life Aliases
 
 # Navigation Shortcuts
 function docs
@@ -591,6 +593,7 @@ function cpy
 function pst
 { Get-Clipboard 
 }
+#endregion
 
 # Enhanced PowerShell Experience
 # Enhanced PSReadLine Configuration
