@@ -188,7 +188,7 @@ function Clear-Cache
   Write-Host "Cache clearing completed." -ForegroundColor Green
 }
 
-# Admin Check and Prompt Customization
+#region Admin Check and Prompt Customization
 $isAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 function prompt
 {
@@ -204,8 +204,9 @@ $adminSuffix = if ($isAdmin)
 { "" 
 }
 $Host.UI.RawUI.WindowTitle = "PowerShell {0}$adminSuffix" -f $PSVersionTable.PSVersion.ToString()
+#endregion
 
-regionUtility Functions
+#region Utility Functions
 function Test-CommandExists
 {
   param($command)
