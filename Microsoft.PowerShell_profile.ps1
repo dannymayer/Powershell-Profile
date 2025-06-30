@@ -15,6 +15,9 @@ $global:canConnectToGitHub = Test-Connection github.com -Count 1 -Quiet -Timeout
 
 #region Import Modules and Profiles
 
+# Define the path to the file that stores the last execution time
+$timeFilePath = [Environment]::GetFolderPath("MyDocuments") + "\PowerShell\LastExecutionTime.txt"
+
 # Ensure Terminal-Icons module is installed before importing
 if (-not (Get-Module -ListAvailable -Name Terminal-Icons))
 {
